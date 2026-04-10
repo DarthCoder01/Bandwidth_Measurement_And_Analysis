@@ -84,26 +84,24 @@ The throughput is highest when hosts communicate on the same switch, as the traf
 ## Proof of Execution
 
 1. **Initial Mininet Setup & Validation** This screenshot demonstrates the successful launch of Mininet using the default topology to verify that the base emulator installation is functioning correctly. It confirms the creation of the fundamental network components—such as hosts, switches, and links—while successfully initializing the Mininet command-line interface for further testing.
-![[Screenshot from 2026-04-09 19-48-07.png]]
+![Initial Mininet Setup & Validation](<Screenshot from 2026-04-09 19-48-07.png>)
 
-
-2.  The Custom Topology Initialization
-![[Screenshot from 2026-04-09 20-00-57.png]]
+2. The Custom Topology Initialization
+![The Custom Topology Initialization](<Screenshot from 2026-04-09 20-00-57.png>)
 Execution of the custom Python topology script (`topology.py`). Demonstrates the successful creation of 2 OpenFlow switches and 4 hosts, verified by an initial baseline connectivity test.
 
-
 3. Controller Connection
-![[Screenshot from 2026-04-09 20-29-37.png]]
+![Controller Connection](<Screenshot from 2026-04-09 20-29-37.png>)
 Initialization of the custom POX controller script (`my_controller.py`). The log confirms the control plane successfully listening and connecting to the Mininet data plane switches (00-00-00-00-00-01 and 00-00-00-00-00-02).
 
 4. Functional Correctness via Remote Controller
-![[Screenshot from 2026-04-09 20-30-03.png]]
+![Functional Correctness via Remote Controller](<Screenshot from 2026-04-09 20-30-03.png>)
 Data plane routing verification. Mininet is launched with the remote POX controller. The `pingall` command results in 0% dropped packets, proving the Layer 2 learning switch logic is correctly handling and routing `PacketIn` events.
 
 5. OpenFlow Match-Action Rules & Controller Interaction
-![[Screenshot from 2026-04-09 22-20-52.png]]
+![OpenFlow Match-Action Rules](<Screenshot from 2026-04-09 22-20-52.png>)
 Proof of explicit flow rule implementation. The top panel (Wireshark) captures the OpenFlow `OFPT_FLOW_MOD` messages sent by the controller. The bottom panel (`dpctl dump-flows`) confirms these match-action rules (source MAC, destination MAC, and output port) were successfully installed into the hardware flow tables of switches s1 and s2.
 
 6. Performance & Bandwidth Analysis
-![[Screenshot from 2026-04-09 22-37-06.png]]
+![Performance & Bandwidth Analysis](<Screenshot from 2026-04-09 22-37-06.png>)
 Throughput testing using `iperf`. Demonstrates a bandwidth of 74.1 Gbits/sec for intra-switch communication (h2 to h1 on s1), compared to a reduced bandwidth of 70.7 Gbits/sec for inter-switch communication (h3 to h1), highlighting the performance impact of multi-hop network topologies.
