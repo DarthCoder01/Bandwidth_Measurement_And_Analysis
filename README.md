@@ -64,6 +64,22 @@ To analyze network performance, TCP throughput was measured using `iperf` across
 - Server started on `h1` (`h1 iperf -s &`)
     
 - Client traffic sent to `h1` from different hosts in the topology.
+
+## Advanced Implementation: 3-Switch Ring Topology & Spanning Tree Protocol (STP)
+
+### Problem Statement
+In a standard multi-switch network, redundancy is necessary to prevent single points of failure. However, connecting switches in a loop (a ring topology) creates a critical issue for basic Layer 2 learning switches: **Broadcast Storms**. When an unknown packet is flooded, it loops endlessly between the switches, overwhelming the network bandwidth and crashing the system.
+
+### Project Structure Addition
+* `ring_topology.py`: A custom Mininet script defining 3 OpenFlow switches (`s1`, `s2`, `s3`) connected in a closed ring, with 2 hosts connected to each switch (6 hosts total).
+
+### Execution & Resolution
+To resolve the broadcast storm without physically breaking the network links, the controller must logically block one port to break the loop. This is achieved by running the POX controller with the **Spanning Tree Protocol (STP)** module enabled.
+
+**1. Start the Advanced POX Controller**
+bash
+cd pox
+python3 pox.py openflow.discovery openflow.spanning_tree forwarding.l2_learning
     
 
 **Results:**
